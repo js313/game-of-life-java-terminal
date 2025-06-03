@@ -13,7 +13,7 @@ public class Main {
             String line = scanner.nextLine().trim();
             if (line.isEmpty()) break;
             String[] parts = line.split(",");
-            initialCells.add(new Cell(Integer.parseInt(parts[0].trim()), Integer.parseInt(parts[1].trim())));
+            initialCells.add(CellFactory.get(Integer.parseInt(parts[0].trim()), Integer.parseInt(parts[1].trim())));
         }
 
         Grid initialGrid = new Grid(initialCells);

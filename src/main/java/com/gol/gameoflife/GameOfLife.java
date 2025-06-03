@@ -14,9 +14,7 @@ public class GameOfLife {
             int liveNeighboursCount = seedGrid.getLiveNeighboursCount(potentialCell);
 
             if(isLive) {
-                // reason why checking '3' and '4' live neighbours
-                // if isLive, liveNeighbourCount includes this cell as well
-                if(liveNeighboursCount==3||liveNeighboursCount==4) nextGenLiveCells.add(potentialCell);
+                if(liveNeighboursCount==2||liveNeighboursCount==3) nextGenLiveCells.add(potentialCell);
             } else {
                 if(liveNeighboursCount==3) nextGenLiveCells.add(potentialCell);
             }

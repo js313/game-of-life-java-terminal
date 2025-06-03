@@ -7,15 +7,9 @@ public class Cell {
     private final int x;
     private final int y;
 
-    Cell(int x, int y) {
+    Cell(int x, int y) { // Only CellFactory can access this
         this.x = x;
         this.y = y;
-    }
-
-    public List<Cell> getNeighbors() {
-        return List.of(new Cell(x-1, y-1), new Cell(x, y-1),new Cell(x+1, y-1),
-                new Cell(x-1, y), new Cell(x, y),new Cell(x+1, y),
-                new Cell(x-1, y+1), new Cell(x, y+1),new Cell(x+1, y+1));
     }
 
     @Override
@@ -38,5 +32,13 @@ public class Cell {
     @Override
     public int hashCode() {
         return Objects.hash(this.x, this.y);
+    }
+
+    List<Cell> getNeighbors() {
+        return List.of(
+                CellFactory.get(x-1, y-1), CellFactory.get(x, y-1), CellFactory.get(x+1, y-1),
+                CellFactory.get(x-1, y),                      /* this */     CellFactory.get(x+1, y),
+                CellFactory.get(x-1, y+1), CellFactory.get(x, y+1), CellFactory.get(x+1, y+1)
+        );
     }
 }

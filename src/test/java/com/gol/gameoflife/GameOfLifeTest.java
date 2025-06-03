@@ -9,10 +9,10 @@ public class GameOfLifeTest {
     @Test
     public void testBlockStillLife() {
         Set<Cell> initial = Set.of(
-                new Cell(1, 1),
-                new Cell(1, 2),
-                new Cell(2, 1),
-                new Cell(2, 2)
+                CellFactory.get(1, 1),
+                CellFactory.get(1, 2),
+                CellFactory.get(2, 1),
+                CellFactory.get(2, 2)
         );
 
         Grid grid = new Grid(initial);
@@ -26,15 +26,15 @@ public class GameOfLifeTest {
     @Test
     public void testBlinkerOscillator() {
         Set<Cell> initial = Set.of(
-                new Cell(1, 0),
-                new Cell(1, 1),
-                new Cell(1, 2)
+                CellFactory.get(1, 0),
+                CellFactory.get(1, 1),
+                CellFactory.get(1, 2)
         );
 
         Set<Cell> expectedNext = Set.of(
-                new Cell(0, 1),
-                new Cell(1, 1),
-                new Cell(2, 1)
+                CellFactory.get(0, 1),
+                CellFactory.get(1, 1),
+                CellFactory.get(2, 1)
         );
 
         Grid grid = new Grid(initial);
@@ -48,21 +48,21 @@ public class GameOfLifeTest {
     @Test
     public void testToadOscillator() {
         Set<Cell> initial = Set.of(
-                new Cell(1, 1),
-                new Cell(1, 2),
-                new Cell(1, 3),
-                new Cell(2, 2),
-                new Cell(2, 3),
-                new Cell(2, 4)
+                CellFactory.get(1, 1),
+                CellFactory.get(1, 2),
+                CellFactory.get(1, 3),
+                CellFactory.get(2, 2),
+                CellFactory.get(2, 3),
+                CellFactory.get(2, 4)
         );
 
         Set<Cell> expectedNext = Set.of(
-                new Cell(0, 2),
-                new Cell(1, 1),
-                new Cell(1, 4),
-                new Cell(2, 1),
-                new Cell(2, 4),
-                new Cell(3, 3)
+                CellFactory.get(0, 2),
+                CellFactory.get(1, 1),
+                CellFactory.get(1, 4),
+                CellFactory.get(2, 1),
+                CellFactory.get(2, 4),
+                CellFactory.get(3, 3)
         );
 
         Grid grid = new Grid(initial);
@@ -76,7 +76,7 @@ public class GameOfLifeTest {
     @Test
     public void testUnderpopulationDies() {
         Set<Cell> initial = Set.of(
-                new Cell(2, 2)
+                CellFactory.get(2, 2)
         );
 
         Set<Cell> expected = Set.of();
@@ -92,19 +92,19 @@ public class GameOfLifeTest {
     @Test
     public void testOverpopulationDies() {
         Set<Cell> initial = Set.of(
-                new Cell(1, 1),
-                new Cell(0, 0),
-                new Cell(0, 1),
-                new Cell(0, 2),
-                new Cell(1, 0)
+                CellFactory.get(1, 1),
+                CellFactory.get(0, 0),
+                CellFactory.get(0, 1),
+                CellFactory.get(0, 2),
+                CellFactory.get(1, 0)
         );
 
         Set<Cell> expected = Set.of(
-                new Cell(0, 0),
-                new Cell(1, 2),
-                new Cell(0, 2),
-                new Cell(1, 0),
-                new Cell(-1, 1)
+                CellFactory.get(0, 0),
+                CellFactory.get(1, 2),
+                CellFactory.get(0, 2),
+                CellFactory.get(1, 0),
+                CellFactory.get(-1, 1)
         );
 
         Grid grid = new Grid(initial);
@@ -118,26 +118,26 @@ public class GameOfLifeTest {
     @Test
     public void testNegativeBounds() {
         Set<Cell> initial = Set.of(
-                new Cell(-2, -2),
-                new Cell(-1, -1),
-                new Cell(-1, -2),
-                new Cell(-1, -3),
-                new Cell(-2, -1),
-                new Cell(-2, -3),
-                new Cell(-3, -1),
-                new Cell(-3, -2),
-                new Cell(-3, -3)
+                CellFactory.get(-2, -2),
+                CellFactory.get(-1, -1),
+                CellFactory.get(-1, -2),
+                CellFactory.get(-1, -3),
+                CellFactory.get(-2, -1),
+                CellFactory.get(-2, -3),
+                CellFactory.get(-3, -1),
+                CellFactory.get(-3, -2),
+                CellFactory.get(-3, -3)
         );
 
         Set<Cell> expected = Set.of(
-                new Cell(0, -2),
-                new Cell(-1, -3),
-                new Cell(-1, -1),
-                new Cell(-2, -4),
-                new Cell(-2, -0),
-                new Cell(-3, -3),
-                new Cell(-3, -1),
-                new Cell(-4, -2)
+                CellFactory.get(0, -2),
+                CellFactory.get(-1, -3),
+                CellFactory.get(-1, -1),
+                CellFactory.get(-2, -4),
+                CellFactory.get(-2, -0),
+                CellFactory.get(-3, -3),
+                CellFactory.get(-3, -1),
+                CellFactory.get(-4, -2)
         );
 
         Grid grid = new Grid(initial);
@@ -151,14 +151,14 @@ public class GameOfLifeTest {
     @Test
     public void testReproductionOfDeadCell() {
         Set<Cell> initial = Set.of(
-                new Cell(0, 1),
-                new Cell(1, 0),
-                new Cell(1, 2)
+                CellFactory.get(0, 1),
+                CellFactory.get(1, 0),
+                CellFactory.get(1, 2)
         );
 
         // (1,1) is dead with 3 neighbors → becomes alive
         Set<Cell> expected = Set.of(
-                new Cell(1, 1)
+                CellFactory.get(1, 1)
         );
 
         Grid grid = new Grid(initial);
@@ -166,7 +166,7 @@ public class GameOfLifeTest {
 
         Grid next = engine.nextGeneration(grid);
 
-        Assertions.assertTrue(next.getLiveCells().contains(new Cell(1, 1)));
+        Assertions.assertEquals(expected, next.getLiveCells());
     }
 
     @Test
