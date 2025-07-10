@@ -1,27 +1,23 @@
 package com.gol.gameoflife;
 
-import java.util.HashSet;
+import com.gol.gameoflife.cell.Cell;
+
 import java.util.Scanner;
 import java.util.Set;
 
 public class Main {
     public static void main(String[] args) {
+        // Get input
         Scanner scanner = new Scanner(System.in);
-        Set<Cell> initialCells = new HashSet<>();
+        Set<Cell> initialCells = InputParser.parseInitialCells(scanner);
 
-        while (scanner.hasNextLine()) {
-            String line = scanner.nextLine().trim();
-            if (line.isEmpty()) break;
-            String[] parts = line.split(",");
-            initialCells.add(CellFactory.get(Integer.parseInt(parts[0].trim()), Integer.parseInt(parts[1].trim())));
-        }
-
+        // Create initial grid
         Grid initialGrid = new Grid(initialCells);
         GameOfLife engine = new GameOfLife();
+        // Compute next generation
         Grid nextGen = engine.nextGeneration(initialGrid);
 
-        for (Cell cell : nextGen.getLiveCells()) {
-            System.out.println(cell);
-        }
+        // Display output
+        OutputPrinter.printLiveCells(nextGen.liveCells());
     }
 }

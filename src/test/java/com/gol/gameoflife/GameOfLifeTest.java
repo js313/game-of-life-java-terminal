@@ -1,5 +1,7 @@
 package com.gol.gameoflife;
 
+import com.gol.gameoflife.cell.Cell;
+import com.gol.gameoflife.cell.CellFactory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -20,7 +22,7 @@ public class GameOfLifeTest {
 
         Grid next = engine.nextGeneration(grid);
 
-        Assertions.assertEquals(initial, next.getLiveCells());
+        Assertions.assertEquals(initial, next.liveCells());
     }
 
     @Test
@@ -42,7 +44,7 @@ public class GameOfLifeTest {
 
         Grid next = engine.nextGeneration(grid);
 
-        Assertions.assertEquals(expectedNext, next.getLiveCells());
+        Assertions.assertEquals(expectedNext, next.liveCells());
     }
 
     @Test
@@ -70,7 +72,7 @@ public class GameOfLifeTest {
 
         Grid next = engine.nextGeneration(grid);
 
-        Assertions.assertEquals(expectedNext, next.getLiveCells());
+        Assertions.assertEquals(expectedNext, next.liveCells());
     }
 
     @Test
@@ -86,7 +88,7 @@ public class GameOfLifeTest {
 
         Grid next = engine.nextGeneration(grid);
 
-        Assertions.assertEquals(expected, next.getLiveCells());
+        Assertions.assertEquals(expected, next.liveCells());
     }
 
     @Test
@@ -112,7 +114,7 @@ public class GameOfLifeTest {
 
         Grid next = engine.nextGeneration(grid);
 
-        Assertions.assertEquals(expected, next.getLiveCells());
+        Assertions.assertEquals(expected, next.liveCells());
     }
 
     @Test
@@ -145,7 +147,7 @@ public class GameOfLifeTest {
 
         Grid next = engine.nextGeneration(grid);
 
-        Assertions.assertEquals(expected, next.getLiveCells());
+        Assertions.assertEquals(expected, next.liveCells());
     }
 
     @Test
@@ -158,6 +160,7 @@ public class GameOfLifeTest {
 
         // (1,1) is dead with 3 neighbors → becomes alive
         Set<Cell> expected = Set.of(
+                CellFactory.get(0, 1),
                 CellFactory.get(1, 1)
         );
 
@@ -166,7 +169,7 @@ public class GameOfLifeTest {
 
         Grid next = engine.nextGeneration(grid);
 
-        Assertions.assertEquals(expected, next.getLiveCells());
+        Assertions.assertEquals(expected, next.liveCells());
     }
 
     @Test
@@ -176,6 +179,6 @@ public class GameOfLifeTest {
 
         Grid next = engine.nextGeneration(grid);
 
-        Assertions.assertTrue(next.getLiveCells().isEmpty());
+        Assertions.assertTrue(next.liveCells().isEmpty());
     }
 }

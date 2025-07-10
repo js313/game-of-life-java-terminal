@@ -1,4 +1,4 @@
-package com.gol.gameoflife;
+package com.gol.gameoflife.cell;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -7,6 +7,6 @@ public class CellFactory {
 
     public static Cell get(int x, int y) {
         String key = x + "," + y;
-        return cellPool.computeIfAbsent(key, k -> new Cell(x, y));
+        return cellPool.computeIfAbsent(key,k -> new Cell(x, y));
     }
 }

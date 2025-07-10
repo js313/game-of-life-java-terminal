@@ -1,4 +1,4 @@
-package com.gol.gameoflife;
+package com.gol.gameoflife.cell;
 
 import java.util.List;
 import java.util.Objects;
@@ -6,8 +6,10 @@ import java.util.Objects;
 public class Cell {
     private final int x;
     private final int y;
+    private List<Cell> neighbors;   // cache for future reference
 
-    Cell(int x, int y) { // Only CellFactory can access this
+    // Only CellFactory can create objects, as this is a package private constructor
+    Cell(int x, int y) {
         this.x = x;
         this.y = y;
     }
@@ -34,11 +36,13 @@ public class Cell {
         return Objects.hash(this.x, this.y);
     }
 
-    List<Cell> getNeighbors() {
-        return List.of(
+    public List<Cell> getNeighbors() {
+        if(neighbors == null)
+            neighbors = List.of(
                 CellFactory.get(x-1, y-1), CellFactory.get(x, y-1), CellFactory.get(x+1, y-1),
                 CellFactory.get(x-1, y),                      /* this */     CellFactory.get(x+1, y),
                 CellFactory.get(x-1, y+1), CellFactory.get(x, y+1), CellFactory.get(x+1, y+1)
-        );
+            );
+        return neighbors;
     }
 }
